@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bar Jauja — Ontinyent, desde 1948</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --bg:            #fbf9f8;
+      --bg-low:        #f5f3f2;
+      --bg-card:       #f0eded;
+      --bg-high:       #eae8e7;
+      --border:        #e0bfbf;
+      --border-dim:    #dcd9d9;
+      --text:          #1b1c1c;
+      --text-variant:  #584141;
+      --primary:       #570013;
+      --primary-ctr:   #800020;
+      --on-primary:    #ffffff;
+      --secondary:     #7d562d;
+      --secondary-ctr: #ffca98;
+      --tertiary:      #2b2720;
+      --tertiary-ctr:  #423c35;
+      --tint:          #af2b3e;
+      --outline:       #8c7071;
+      --shadow: 0px 4px 20px rgba(128, 0, 32, 0.08);
+
+      --r-sm:   2px;
+      --r:      4px;
+      --r-md:   6px;
+      --r-lg:   8px;
+      --r-xl:   12px;
+      --r-full: 9999px;
+
+      --sp-xs:  4px;
+      --sp-sm:  12px;
+      --sp-md:  24px;
+      --sp-lg:  48px;
+      --sp-xl:  80px;
+    }
+
+    /* ── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Work Sans', sans-serif;
+      font-size: 16px;
+      line-height: 24px;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── TYPOGRAPHY ─────────────────────────────────────────── */
+    .t-display {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .t-headline-lg {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: clamp(24px, 4vw, 32px);
+      font-weight: 600;
+      line-height: 1.25;
+    }
+    .t-headline-md {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: clamp(20px, 3vw, 24px);
+      font-weight: 600;
+      line-height: 1.33;
+    }
+    .t-body-lg { font-size: 18px; line-height: 28px; }
+    .t-label {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ── LAYOUT UTILITIES ───────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin-inline: auto;
+      padding-inline: 64px;
+    }
+    @media (max-width: 768px) {
+      .container { padding-inline: 16px; }
+    }
+    .section { padding-block: var(--sp-xl); }
+
+    /* ── NAV ─────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border-dim);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+    }
+    .nav-logo span {
+      display: block;
+      font-size: 11px;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      line-height: 1;
+    }
+    .nav-links {
+      display: flex;
+      gap: var(--sp-md);
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--text-variant);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-cta {
+      padding: 8px 20px;
+      background: var(--primary-ctr);
+      color: var(--on-primary);
+      border-radius: var(--r-lg);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--primary); color: #fff; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* ── HERO ────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--tertiary);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(87, 0, 19, 0.88) 0%,
+          rgba(43, 39, 32, 0.75) 60%,
+          rgba(43, 39, 32, 0.4) 100%
+        ),
+        url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80') center/cover no-repeat;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: var(--sp-md);
+      color: var(--secondary-ctr);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--secondary-ctr);
+    }
+    .hero h1 {
+      color: #fff;
+      margin-bottom: var(--sp-md);
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--secondary-ctr);
+    }
+    .hero-sub {
+      color: rgba(255,255,255,0.75);
+      margin-bottom: var(--sp-lg);
+      max-width: 520px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: var(--sp-md);
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--primary-ctr);
+      color: var(--on-primary);
+      border-radius: var(--r-lg);
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: 0.03em;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--tint); transform: translateY(-1px); }
+    .btn-outlined {
+      display: inline-block;
+      padding: 12px 30px;
+      border: 2px solid var(--secondary-ctr);
+      color: var(--secondary-ctr);
+      border-radius: var(--r-lg);
+      font-family: 'Libre Caslon Text', serif;
+      font-size: 15px;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-outlined:hover {
+      background: var(--secondary-ctr);
+      color: var(--tertiary);
+    }
+    .hero-badge {
+      position: absolute;
+      bottom: var(--sp-xl);
+      right: var(--sp-xl);
+      width: 100px;
+      height: 100px;
+      background: var(--primary);
+      border: 2px solid var(--secondary-ctr);
+      border-radius: var(--r-full);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      z-index: 3;
+    }
+    .hero-badge-year { font-family: 'Libre Caslon Text', serif; font-size: 22px; font-weight: 700; line-height: 1; }
+    .hero-badge-label { font-size: 9px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 4px; color: var(--secondary-ctr); }
+    @media (max-width: 768px) { .hero-badge { display: none; } }
+
+    /* ── ABOUT STRIP ─────────────────────────────────────────── */
+    .about-strip {
+      background: var(--tertiary);
+      color: #fff;
+      padding-block: var(--sp-lg);
+    }
+    .about-strip-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-md);
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--secondary-ctr);
+      line-height: 1;
+    }
+    .stat-label { font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-top: 6px; }
+    @media (max-width: 768px) { .about-strip-inner { grid-template-columns: 1fr; gap: var(--sp-lg); } }
+
+    /* ── STORY ───────────────────────────────────────────────── */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-xl);
+      align-items: center;
+    }
+    .story-img {
+      position: relative;
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      aspect-ratio: 4/5;
+    }
+    .story-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .story-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--r-xl);
+      border: 1px solid var(--border);
+    }
+    .story-text { padding-left: var(--sp-md); }
+    .story-text .t-label { color: var(--secondary); margin-bottom: var(--sp-sm); }
+    .story-text h2 { margin-bottom: var(--sp-md); }
+    .story-text p { color: var(--text-variant); margin-bottom: var(--sp-md); }
+    .story-text p:last-of-type { margin-bottom: var(--sp-lg); }
+    @media (max-width: 768px) {
+      .story-grid { grid-template-columns: 1fr; }
+      .story-text { padding-left: 0; }
+    }
+
+    /* ── DIVIDER ─────────────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin-inline: auto;
+      max-width: 120px;
+      opacity: 0.6;
+    }
+
+    /* ── MENU ────────────────────────────────────────────────── */
+    .menu-section { background: var(--bg-low); }
+    .section-header { text-align: center; margin-bottom: var(--sp-xl); }
+    .section-header .t-label { color: var(--secondary); margin-bottom: var(--sp-sm); }
+    .section-header h2 { margin-bottom: var(--sp-sm); }
+    .section-header p { color: var(--text-variant); max-width: 520px; margin-inline: auto; }
+
+    .menu-tabs {
+      display: flex;
+      justify-content: center;
+      gap: var(--sp-sm);
+      margin-bottom: var(--sp-lg);
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 8px 20px;
+      border-radius: var(--r-full);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-variant);
+      letter-spacing: 0.04em;
+      transition: background 0.2s, color 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--primary-ctr);
+      color: #fff;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--sp-md);
+    }
+    .menu-card {
+      background: var(--bg);
+      border-radius: var(--r-lg);
+      border: 1px solid var(--border-dim);
+      padding: var(--sp-md);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .menu-card:hover { transform: translateY(-2px); box-shadow: 0px 8px 28px rgba(128, 0, 32, 0.12); }
+    .menu-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--sp-sm);
+    }
+    .menu-card h3 {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .menu-card-price {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary-ctr);
+      white-space: nowrap;
+    }
+    .menu-card-desc { font-size: 14px; color: var(--text-variant); line-height: 22px; }
+    .menu-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      padding: 3px 10px;
+      border-radius: var(--r-full);
+      background: var(--secondary-ctr);
+      color: var(--secondary);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .menu-divider {
+      height: 1px;
+      background: var(--border);
+      margin: var(--sp-md) 0;
+      opacity: 0.5;
+    }
+
+    /* ── SPECIALTIES ─────────────────────────────────────────── */
+    .specials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-md);
+    }
+    .special-card {
+      position: relative;
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      aspect-ratio: 3/4;
+    }
+    .special-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .special-card:hover img { transform: scale(1.04); }
+    .special-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(43,39,32,0.92) 0%, transparent 55%);
+      padding: var(--sp-md);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .special-overlay h3 {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .special-overlay p { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+    @media (max-width: 768px) { .specials-grid { grid-template-columns: 1fr; } }
+
+    /* ── TESTIMONIALS ────────────────────────────────────────── */
+    .testimonials-section { background: var(--bg-low); }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-md);
+    }
+    .testimonial-card {
+      background: var(--bg);
+      border-radius: var(--r-lg);
+      border: 1px solid var(--border-dim);
+      padding: var(--sp-md);
+      box-shadow: var(--shadow);
+    }
+    .stars { color: var(--secondary); font-size: 16px; margin-bottom: var(--sp-sm); letter-spacing: 2px; }
+    .testimonial-card blockquote {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: 16px;
+      font-style: italic;
+      line-height: 26px;
+      color: var(--text);
+      margin-bottom: var(--sp-sm);
+    }
+    .testimonial-author { font-size: 13px; font-weight: 600; color: var(--text-variant); letter-spacing: 0.04em; }
+    @media (max-width: 768px) { .testimonials-grid { grid-template-columns: 1fr; } }
+
+    /* ── CONTACT ─────────────────────────────────────────────── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-xl);
+      align-items: start;
+    }
+    .contact-info .t-label { color: var(--secondary); margin-bottom: var(--sp-sm); }
+    .contact-info h2 { margin-bottom: var(--sp-md); }
+    .contact-detail {
+      display: flex;
+      gap: var(--sp-sm);
+      margin-bottom: var(--sp-md);
+      align-items: flex-start;
+    }
+    .contact-icon {
+      width: 40px; height: 40px;
+      border-radius: var(--r-lg);
+      background: var(--secondary-ctr);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .contact-detail-text strong { display: block; font-weight: 600; font-size: 15px; color: var(--text); }
+    .contact-detail-text span { font-size: 14px; color: var(--text-variant); }
+
+    .hours-table { width: 100%; border-collapse: collapse; margin-top: var(--sp-sm); }
+    .hours-table tr { border-bottom: 1px solid var(--border-dim); }
+    .hours-table td { padding: 8px 0; font-size: 14px; }
+    .hours-table td:first-child { color: var(--text-variant); }
+    .hours-table td:last-child { text-align: right; font-weight: 600; }
+
+    .map-placeholder {
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      height: 340px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .map-placeholder iframe { width: 100%; height: 100%; border: 0; }
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+
+    /* ── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      background: var(--tertiary);
+      color: rgba(255,255,255,0.65);
+      padding-block: var(--sp-lg);
+      font-size: 14px;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--sp-md);
+    }
+    .footer-logo {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .footer-logo span {
+      display: block;
+      font-size: 10px;
+      font-family: 'Work Sans', sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--secondary-ctr);
+      margin-top: 2px;
+    }
+    .footer-links { display: flex; gap: var(--sp-md); }
+    .footer-links a { color: rgba(255,255,255,0.55); font-size: 13px; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--secondary-ctr); }
+    .footer-copy { font-size: 12px; }
+
+    /* ── SCROLL REVEAL (lightweight) ────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">
+      Bar Jauja
+      <span>Ontinyent · Est. 1948</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#historia">Historia</a></li>
+      <li><a href="#carta">Carta</a></li>
+      <li><a href="#especialidades">Especialidades</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a href="#contacto" class="nav-cta">Reservar</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Desde 1948 en Ontinyent</div>
+      <h1 class="t-display">
+        El sabor de<br>
+        <em>lo de siempre,</em><br>
+        con todo su carácter.
+      </h1>
+      <p class="t-body-lg hero-sub">
+        Tres generaciones sirviendo tapas, vinos y conversación en el corazón de la Vall d'Albaida. Aquí la cocina no cambia; se afina.
+      </p>
+      <div class="hero-actions">
+        <a href="#carta" class="btn-primary">Ver la carta</a>
+        <a href="#contacto" class="btn-outlined">Cómo llegar</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-badge">
+    <span class="hero-badge-year">1948</span>
+    <span class="hero-badge-label">Fundado</span>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="about-strip">
+  <div class="container about-strip-inner">
+    <div>
+      <div class="stat-num">76</div>
+      <div class="stat-label">Años de historia</div>
+    </div>
+    <div>
+      <div class="stat-num">3</div>
+      <div class="stat-label">Generaciones familiares</div>
+    </div>
+    <div>
+      <div class="stat-num">40+</div>
+      <div class="stat-label">Tapas en carta</div>
+    </div>
+  </div>
+</div>
+
+<!-- STORY -->
+<section class="section" id="historia">
+  <div class="container">
+    <div class="story-grid reveal">
+      <div class="story-img">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80" alt="Interior del Bar Jauja" />
+      </div>
+      <div class="story-text">
+        <p class="t-label">Nuestra historia</p>
+        <h2 class="t-headline-lg">Un bar con raíces en la postguerra y el alma intacta.</h2>
+        <p class="t-body-lg">En 1948, Jauja abrió sus puertas en la calle Mayor de Ontinyent como un modesto bar de vinos. La familia Castelló lo convirtió en punto de encuentro de labradores, artesanos y vecinos. La receta del éxito nunca ha cambiado: producto de la comarca, trato familiar y un mostrador siempre animado.</p>
+        <p>Hoy, la tercera generación mantiene las recetas originales —el all i pebre, la coca de recapte, las olives adobades— mientras cuida una bodega de vinos de la Denominació d'Origen Valencia que haría orgulloso al fundador.</p>
+        <a href="#carta" class="btn-primary">Descubrir la carta</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="section menu-section" id="carta">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="t-label">La carta</p>
+      <h2 class="t-headline-lg">Tapas, raciones y vinos de la comarca</h2>
+      <p>Ingredientes locales, recetas de siempre. Todo elaborado en cocina propia.</p>
+    </div>
+
+    <div class="menu-tabs reveal">
+      <button class="tab-btn active">Tapas</button>
+      <button class="tab-btn">Raciones</button>
+      <button class="tab-btn">Bocadillos</button>
+      <button class="tab-btn">Vinos</button>
+    </div>
+
+    <div class="menu-grid reveal">
+
+      <div class="menu-card">
+        <div class="menu-card-top">
+          <h3>All i pebre de polp</h3>
+          <span class="menu-card-price">3,50 €</span>
+        </div>
+        <p class="menu-card-desc">Pulpo cocinado en salsa de ajo y pimentón valenciana. Receta de la casa desde 1948.</p>
+        <div class="menu-tags">
+          <span class="tag">Clásico</span>
+          <span class="tag">Sin gluten</span>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-top">
+          <h3>Croquetes de bacallà</h3>
+          <span class="menu-card-price">2,80 €</span>
+        </div>
+        <p class="menu-card-desc">Croquetas artesanas de bacalao con bechamel casera. Fritas al momento.</p>
+        <div class="menu-tags">
+          <span class="tag">Casero</span>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-top">
+          <h3>Olives adobades</h3>
+          <span class="menu-card-price">1,80 €</span>
+        </div>
+        <p class="menu-card-desc">Aceitunas aliñadas con tomillo, laurel y naranja. Marinadas 48 horas.</p>
+        <div class="menu-tags">
+          <span class="tag">Vegetarià</span>
+          <span class="tag">Sin gluten</span>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-top">
+          <h3>Coca de recapte</h3>
+          <span class="menu-card-price">3,20 €</span>
+        </div>
+        <p class="menu-card-desc">Coca de masa fina con escalivada, anchoas y oliva negra. Horneada en el día.</p>
+        <div class="menu-tags">
+          <span class="tag">Casero</span>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-top">
+          <h3>Boquerones en vinagre</h3>
+          <span class="menu-card-price">2,50 €</span>
+        </div>
+        <p class="menu-card-desc">Boquerones marinados al natural con ajo, perejil y aceite de oliva virgen extra.</p>
+        <div class="menu-tags">
+          <span class="tag">Sin gluten</span>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-top">
+          <h3>Patatas braves de la casa</h3>
+          <span class="menu-card-price">2,20 €</span>
+        </div>
+        <p class="menu-card-desc">Con salsa brava propia, ligeramente picante, y alioli casero. Clásico imprescindible.</p>
+        <div class="menu-tags">
+          <span class="tag">Vegetarià</span>
+          <span class="tag">Clásico</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALTIES -->
+<section class="section" id="especialidades">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="t-label">Lo que nos define</p>
+      <h2 class="t-headline-lg">Tres especialidades de la casa</h2>
+      <p>Platos que no verás iguales en ningún otro sitio de la comarca.</p>
+    </div>
+    <div class="specials-grid reveal">
+      <div class="special-card">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=700&q=80" alt="All i pebre" />
+        <div class="special-overlay">
+          <h3>All i pebre de polp</h3>
+          <p>La joya de la carta. Receta original de la família Castelló, sin cambios desde el 48.</p>
+        </div>
+      </div>
+      <div class="special-card">
+        <img src="https://images.unsplash.com/photo-1567529692333-de9fd6772897?w=700&q=80" alt="Embutidos valencianos" />
+        <div class="special-overlay">
+          <h3>Tabla de embutidos de la Vall</h3>
+          <p>Longaniza, morcilla y cansalada de productores locales de Ontinyent y la comarca.</p>
+        </div>
+      </div>
+      <div class="special-card">
+        <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=700&q=80" alt="Vinos DO Valencia" />
+        <div class="special-overlay">
+          <h3>Vinos DO Valencia</h3>
+          <p>Selección de tintos, blancos y rosados de bodegas de la Denominació d'Origen Valencia.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="t-label">Lo que dicen</p>
+      <h2 class="t-headline-lg">La voz de nuestros clientes</h2>
+    </div>
+    <div class="testimonials-grid reveal">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"El all i pebre és el millor que he provat mai. Un bar de tota la vida que no ha perdut la seua ànima."</blockquote>
+        <div class="testimonial-author">— Marta G., Ontinyent</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Vengo desde Valencia solo por las croquetas y el ambiente. Hay bares más modernos, pero ninguno con esta calidez."</blockquote>
+        <div class="testimonial-author">— Rafa M., Valencia</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"La selección de vinos de la D.O. Valencia me sorprendió. Precios muy razonables para la calidad que ofrecen."</blockquote>
+        <div class="testimonial-author">— Laia T., Bocairent</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contacto">
+  <div class="container">
+    <div class="contact-grid reveal">
+      <div class="contact-info">
+        <p class="t-label">Dónde estamos</p>
+        <h2 class="t-headline-lg">Ven a vernos</h2>
+        <div class="contact-detail">
+          <div class="contact-icon">📍</div>
+          <div class="contact-detail-text">
+            <strong>Dirección</strong>
+            <span>Carrer Major, 12 · 46870 Ontinyent, València</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">📞</div>
+          <div class="contact-detail-text">
+            <strong>Teléfono</strong>
+            <span>962 38 XX XX</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">🕐</div>
+          <div class="contact-detail-text">
+            <strong>Horario</strong>
+          </div>
+        </div>
+        <table class="hours-table">
+          <tr><td>Lunes – Jueves</td><td>8:00 – 23:00</td></tr>
+          <tr><td>Viernes – Sábado</td><td>8:00 – 01:00</td></tr>
+          <tr><td>Domingo</td><td>9:00 – 16:00</td></tr>
+        </table>
+      </div>
+      <div class="map-placeholder">
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-0.6145%2C38.8200%2C-0.5945%2C38.8300&layer=mapnik"
+          title="Mapa Bar Jauja Ontinyent"
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-logo">
+      Bar Jauja
+      <span>Ontinyent · Est. 1948</span>
+    </div>
+    <nav class="footer-links">
+      <a href="#historia">Historia</a>
+      <a href="#carta">Carta</a>
+      <a href="#especialidades">Especialidades</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <span class="footer-copy">© 2025 Bar Jauja · Tots els drets reservats</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+
+  // Menu tabs (filter)
+  const tabs = document.querySelectorAll('.tab-btn');
+  tabs.forEach(btn => btn.addEventListener('click', () => {
+    tabs.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }));
+</script>
+</body>
+</html>
